@@ -1,23 +1,33 @@
-import React, { Component } from 'react';
-import CartItem from './CartItem';
+import React, { Component } from "react";
+import CartItem from "./CartItem";
+import CheckoutModal from "./CheckoutModal"; // Import modal
+import { FaTrash, FaArrowRight } from "react-icons/fa";
 
 class Cart extends Component {
+  state = { showModal: false }; // Manage modal state
+
   calculateTotal() {
-    return this.props.items.reduce(
-      (total, item) => total + (item.price * item.quantity), 
-      0
-    );
+    return this.props.items.reduce((total, item) => total + item.price * item.quantity, 0);
   }
+
+  handleShowModal = () => {
+    this.setState({ showModal: true });
+  };
+
+  handleCloseModal = () => {
+    this.setState({ showModal: false });
+  };
 
   render() {
     const { items, removeFromCart, clearCart } = this.props;
     const total = this.calculateTotal();
+    const { showModal } = this.state;
 
     if (items.length === 0) {
       return (
         <div className="cart-empty">
-          <h2>Your Cart</h2>
-          <p>Your cart is empty.</p>
+          <h2>Your Cart is Empty</h2>
+          <p>Add some products to see them here.</p>
         </div>
       );
     }
@@ -27,26 +37,32 @@ class Cart extends Component {
         <div className="cart-header">
           <h2>Your Cart</h2>
           <button className="clear-cart-btn" onClick={clearCart}>
-            Clear Cart
+            <FaTrash className="icon" /> Clear Cart
           </button>
         </div>
+
         <div className="cart-items">
-          {items.map(item => (
-            <CartItem 
-              key={item.id} 
-              item={item} 
-              removeFromCart={removeFromCart} 
-            />
+          {items.map((item) => (
+            <CartItem key={item.id} item={item} removeFromCart={removeFromCart} />
           ))}
         </div>
+
         <div className="cart-footer">
-          <div className="cart-total">
-            <h3>Total: ${total.toFixed(2)}</h3>
-          </div>
-          <button className="checkout-btn">
-            Proceed to Checkout
+          <h3 className="cart-total">
+            Total: <span>₱{total.toFixed(2)}</span>
+          </h3>
+          <button className="checkout-btn" onClick={this.handleShowModal}>
+            Proceed to Checkout <FaArrowRight className="icon" />
           </button>
         </div>
+
+        {/* Checkout Modal */}
+        <CheckoutModal 
+          show={showModal} 
+          onClose={this.handleCloseModal} 
+          items={items} 
+          total={total} 
+        />
       </div>
     );
   }

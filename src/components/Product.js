@@ -5,7 +5,7 @@ function Product({ product, addToCart }) {
     <div className="product-card">
       <img src={product.image} alt={product.name} className="product-image" />
       <h3>{product.name}</h3>
-      <p className="product-price">Php {product.price.toFixed(2)}</p>
+      <p className="product-price">₱ {product.price.toFixed(2)}</p>
       <button 
         className="add-to-cart-btn"
         onClick={() => addToCart(product)}
