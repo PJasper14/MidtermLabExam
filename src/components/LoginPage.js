@@ -4,48 +4,74 @@ import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 const LoginPage = ({ onLogin }) => {
   const [isRegistering, setIsRegistering] = useState(false);
+  const [name, setName] = useState(""); // Add name for registration
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
-  const [users, setUsers] = useState([
-    { email: "admin", password: "admin123" },
-    { email: "user", password: "user123" }
-  ]);
-
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  // Handle Login
+  const handleLogin = async (e) => {
     e.preventDefault();
-    const user = users.find((u) => u.email === email);
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await response.json();
 
-    if (user && user.password === password) {
-      setError("");
-      onLogin(email === "admin" ? "admin" : "user");
-      navigate(email === "admin" ? "/admin" : "/app"); // Redirect based on role
-    } else {
-      setError("Invalid credentials! Please try again.");
+      if (response.ok) {
+        setError("");
+        onLogin(data.user.is_admin ? "admin" : "user");
+        navigate(data.user.is_admin ? "/admin" : "/app");
+      } else {
+        setError(data.message || "Invalid credentials");
+      }
+    } catch (err) {
+      setError("An error occurred. Please try again.");
     }
   };
 
-  const handleRegister = (e) => {
+  // Handle Register
+  const handleRegister = async (e) => {
     e.preventDefault();
-    if (!email || !password || !confirmPassword) {
-      setError("All fields are required.");
-      return;
-    }
+    
+    // Basic validation
     if (password !== confirmPassword) {
       setError("Passwords do not match.");
       return;
     }
-    if (password.length < 6) {
-      setError("Password must be at least 6 characters long.");
-      return;
+
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name, // Include name in registration request
+          email,
+          password,
+          password_confirmation: confirmPassword,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setIsRegistering(false);
+        setError("");
+        alert("Registration successful! You can now log in.");
+      } else {
+        setError(data.message || "Registration failed.");
+      }
+    } catch (err) {
+      setError("An error occurred during registration.");
     }
-    setUsers([...users, { email, password }]);
-    setIsRegistering(false);
-    setError("");
-    alert("Registration successful! You can now log in.");
   };
 
   return (
@@ -68,11 +94,25 @@ const LoginPage = ({ onLogin }) => {
             {error && <div className="alert alert-danger text-center">{error}</div>}
 
             <form onSubmit={isRegistering ? handleRegister : handleLogin}>
+              {/* Show Name Field Only for Registration */}
+              {isRegistering && (
+                <div className="mb-3">
+                  <input
+                    type="text"
+                    className="form-control login-input"
+                    placeholder="Full Name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                  />
+                </div>
+              )}
+
               <div className="mb-3">
                 <input
-                  type="text"
+                  type="email"
                   className="form-control login-input"
-                  placeholder="Username"
+                  placeholder="Email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
