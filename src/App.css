@@ -503,8 +503,25 @@ body {
 }
 
 .login-image {
-  width: 80%;
-  max-width: 500px;
+  width: 100%;
+  max-width: 800px;
   border-radius: 10px;
 }
+
+.shop-logo-container {
+  color: white;
+}
+
+.shop-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+}
+
+.shop-subtitle {
+  font-size: 1.2rem;
+  color: white;
+  opacity: 0.8; 
+}
+
 

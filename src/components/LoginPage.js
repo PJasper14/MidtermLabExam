@@ -119,8 +119,10 @@ const LoginPage = ({ onLogin }) => {
         </div>
 
         {/* Right Side - Image */}
-        <div className="col-md-6 d-none d-md-flex align-items-center justify-content-center">
-          <img src="shop.png" alt="E-commerce" className="login-image" />
+        <div className="col-md-6 d-none d-md-flex flex-column align-items-center justify-content-center text-center">
+          <img src="shoplogo.png" alt="E-commerce" className="login-image" /> 
+          <h2 className="shop-title mt-3">SHOPEASY</h2>
+          <p className="shop-subtitle ">Shop with confidence</p>
         </div>
       </div>
     </div>

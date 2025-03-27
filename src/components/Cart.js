@@ -18,6 +18,13 @@ class Cart extends Component {
     this.setState({ showModal: false });
   };
 
+  handleConfirmOrder = () => {
+    // Close modal and clear cart after confirming order
+    this.setState({ showModal: false }, () => {
+      this.props.clearCart();
+    });
+  };
+
   render() {
     const { items, removeFromCart, clearCart } = this.props;
     const total = this.calculateTotal();
@@ -62,6 +69,7 @@ class Cart extends Component {
           onClose={this.handleCloseModal} 
           items={items} 
           total={total} 
+          clearCart={this.handleConfirmOrder} // Pass clearCart function
         />
       </div>
     );
