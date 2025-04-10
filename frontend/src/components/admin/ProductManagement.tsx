@@ -73,34 +73,34 @@ const ProductManagement: React.FC = () => {
     }
   };
   
-  const handleToggleFeatured = async (product: Product) => {
-    try {
-      const updatedProduct = await updateProduct(product.id, {
-        featured: !product.featured
-      });
+  // const handleToggleFeatured = async (product: Product) => {
+  //   try {
+  //     const updatedProduct = await updateProduct(product.id, {
+  //       featured: !product.featured
+  //     });
       
-      if (updatedProduct) {
-        // Update the products list
-        const updatedProducts = products.map(p => 
-          p.id === product.id ? { ...p, featured: !p.featured } : p
-        );
+  //     if (updatedProduct) {
+  //       // Update the products list
+  //       const updatedProducts = products.map(p => 
+  //         p.id === product.id ? { ...p, featured: !p.featured } : p
+  //       );
         
-        setProducts(updatedProducts);
-        setFilteredProducts(
-          searchTerm.trim() === '' 
-            ? updatedProducts 
-            : updatedProducts.filter(p => 
-                p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                p.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                p.description.toLowerCase().includes(searchTerm.toLowerCase())
-              )
-        );
-      }
-    } catch (err) {
-      setError('Failed to update product feature status.');
-      console.error('Error updating product:', err);
-    }
-  };
+  //       setProducts(updatedProducts);
+  //       setFilteredProducts(
+  //         searchTerm.trim() === '' 
+  //           ? updatedProducts 
+  //           : updatedProducts.filter(p => 
+  //               p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  //               p.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  //               p.description.toLowerCase().includes(searchTerm.toLowerCase())
+  //             )
+  //       );
+  //     }
+  //   } catch (err) {
+  //     setError('Failed to update product feature status.');
+  //     console.error('Error updating product:', err);
+  //   }
+  // };
   
   const confirmDelete = (product: Product) => {
     setProductToDelete(product);
@@ -143,7 +143,7 @@ const ProductManagement: React.FC = () => {
   };
   
   return (
-    <Container className="py-5">
+    <Container className="p-1">
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h2>Product Management</h2>
         <Link to="/admin/products/new">
@@ -184,11 +184,12 @@ const ProductManagement: React.FC = () => {
               <th>ID</th>
               <th>Image</th>
               <th>Name</th>
+              <th>Description</th>
               <th>Category</th>
               <th>Price</th>
               <th>Stock</th>
-              <th>Featured</th>
-              <th>Actions</th>
+              {/* <th>Featured</th> */}
+              <th className="text-center">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -203,14 +204,15 @@ const ProductManagement: React.FC = () => {
                   />
                 </td>
                 <td>{product.name}</td>
+                <td>{product.description}</td>
                 <td>{product.category}</td>
                 <td>₱{product.price.toFixed(2)}</td>
-                <td>
+                <td className="text-center">
                   <span className={product.stock < 10 ? 'text-danger fw-bold' : ''}>
                     {product.stock}
                   </span>
                 </td>
-                <td>
+                {/* <td>
                   <Button
                     variant={product.featured ? 'success' : 'outline-secondary'}
                     size="sm"
@@ -222,20 +224,20 @@ const ProductManagement: React.FC = () => {
                       <FontAwesomeIcon icon={faTimes} />
                     )}
                   </Button>
-                </td>
+                </td> */}
                 <td>
                   <Link to={`/admin/products/edit/${product.id}`}>
                     <Button
                       variant="outline-primary"
                       size="sm"
-                      className="me-2"
+                      className="w-75 mb-1 ms-3"
                     >
                       <FontAwesomeIcon icon={faEdit} className="me-1" />
                       Edit
                     </Button>
                   </Link>
 
-                  <Link to={`/products/${product.id}`}>
+                  {/* <Link to={`/products/${product.id}`}>
                     <Button
                       variant="outline-info"
                       size="sm"
@@ -244,14 +246,16 @@ const ProductManagement: React.FC = () => {
                       <FontAwesomeIcon icon={faEye} className="me-1" />
                       View
                     </Button>
-                  </Link>
+                  </Link> */}
                   
                   <Button 
                     variant="outline-danger" 
                     size="sm"
+                    className="w-75 ms-3"
                     onClick={() => confirmDelete(product)}
                   >
                     <FontAwesomeIcon icon={faTrash} />
+                    Delete
                   </Button>
                 </td>
               </tr>

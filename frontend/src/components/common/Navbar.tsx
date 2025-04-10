@@ -59,6 +59,7 @@ const NavigationBar: React.FC = () => {
         <>
           <Nav.Link as={Link} to="/">Home</Nav.Link>
           <Nav.Link as={Link} to="/products">Products</Nav.Link>
+          {/* <Nav.Link as={Link} to="/my_orders">My Orders</Nav.Link> */}
         </>
       );
     }

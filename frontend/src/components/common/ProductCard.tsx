@@ -55,11 +55,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
     <>
       <Card className="h-100 product-card shadow-sm">
-        {product.featured && (
+        {/* {product.featured && (
           <div className="position-absolute top-0 end-0 m-2">
             <Badge bg="warning" text="dark">Featured</Badge>
           </div>
-        )}
+        )} */}
         <div className="position-relative">
           <Card.Img 
             variant="top" 

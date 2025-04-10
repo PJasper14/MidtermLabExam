@@ -80,7 +80,7 @@ const HomePage: React.FC = () => {
         <Card.Img  
           src="https://picsum.photos/seed/ecommerce/1200/400"
           alt="Welcome Banner"
-          style={{ height: '400px', objectFit: 'cover' }}
+          style={{ height: '300px', objectFit: 'cover' }}
           className="rounded-3"
         />
         <Card.ImgOverlay className="d-flex flex-column justify-content-center align-items-center text-center bg-dark bg-opacity-50 rounded-3">
@@ -95,7 +95,7 @@ const HomePage: React.FC = () => {
       </Card>
 
       {/* Featured Products Section */}
-      <h2 className="mb-4">Featured Products</h2>
+      {/* <h2 className="mb-4">Featured Products</h2>
       {loading ? (
         <p>Loading featured products...</p>
       ) : (
@@ -112,7 +112,7 @@ const HomePage: React.FC = () => {
             <p>No featured products available at the moment.</p>
           )}
         </>
-      )}
+      )} */}
 
       {/* Categories Section */}
       <h2 className="mb-4">Shop by Category</h2>
@@ -146,7 +146,7 @@ const HomePage: React.FC = () => {
       </Row>
 
       {/* Promotional Banner */}
-      <Card className="mb-5 text-white border-0">
+      {/* <Card className="mb-5 text-white border-0">
         <Card.Img 
           src="https://picsum.photos/seed/sale/1200/300"
           alt="Special Promotion"
@@ -162,7 +162,7 @@ const HomePage: React.FC = () => {
             <Button variant="light">Shop Now</Button>
           </Link>
         </Card.ImgOverlay>
-      </Card>
+      </Card> */}
     </Container>
   );
 };

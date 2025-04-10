@@ -271,7 +271,7 @@ const ProductForm: React.FC = () => {
                   </Col>
                 </Row>
                 
-                <Form.Group className="mb-3">
+                {/* <Form.Group className="mb-3">
                   <Form.Check
                     type="checkbox"
                     label="Featured Product"
@@ -279,7 +279,7 @@ const ProductForm: React.FC = () => {
                     checked={formData.featured}
                     onChange={handleInputChange}
                   />
-                </Form.Group>
+                </Form.Group> */}
                 
                 <ImageUploader
                   initialImage={formData.image}
